@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import CloudBackground from './components/CloudBackground'
 import LandingScreen from './screens/LandingScreen'
 import CameraCapture from './screens/CameraCapture'
 import ProcessingScreen from './screens/ProcessingScreen'
@@ -14,8 +13,7 @@ import CloudHistoryScreen from './screens/CloudHistoryScreen'
 function App() {
   return (
     <BrowserRouter>
-      <CloudBackground />
-      <div className="min-h-screen w-full relative">
+      <div className="min-h-screen w-full relative bg-gradient-to-b from-[#D0E8FF] via-[#E8F3FF] to-[#FFFFFF]">
         <Navbar />
         <main className="pt-16 sm:pt-20">
           <Routes>

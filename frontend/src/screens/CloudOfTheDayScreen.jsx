@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Star, Calendar, Download, Share2 } from 'lucide-react'
 import Mascot from '../components/Mascot'
+import FloatingClouds from '../components/FloatingClouds'
 import useCloudHistory from '../hooks/useCloudHistory'
 
 // Mock featured cloud (in real app, this would come from backend)
@@ -56,8 +57,10 @@ export default function CloudOfTheDayScreen() {
 
   if (loading) {
     return (
-      <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center">
-        <Mascot mood="idle" size="lg" />
+      <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center relative">
+        <FloatingClouds />
+        <div className="relative z-10">
+          <Mascot mood="idle" size="lg" />
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -65,17 +68,21 @@ export default function CloudOfTheDayScreen() {
         >
           <Star className="w-12 h-12 text-white" />
         </motion.div>
+        </div>
       </div>
     )
   }
 
   if (!cloud) {
     return (
-      <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center">
-        <Mascot mood="sleep" size="lg" />
-        <div className="text-center text-white mt-8">
-          <p className="text-xl font-bold mb-2">No featured cloud yet</p>
-          <p className="text-sky-100">Upload a cloud to be featured!</p>
+      <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center relative">
+        <FloatingClouds />
+        <div className="relative z-10 text-center">
+          <Mascot mood="sleep" size="lg" />
+          <div className="text-center text-white mt-8">
+            <p className="text-xl font-bold mb-2">No featured cloud yet</p>
+            <p className="text-sky-100">Upload a cloud to be featured!</p>
+          </div>
         </div>
       </div>
     )
@@ -89,9 +96,12 @@ export default function CloudOfTheDayScreen() {
   })
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col relative">
+      {/* Floating background clouds */}
+      <FloatingClouds />
+
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -105,7 +115,7 @@ export default function CloudOfTheDayScreen() {
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6 lg:mb-8">
+      <div className="flex justify-center mb-6 lg:mb-8 relative z-10">
         <Mascot mood="excited" size="md" />
       </div>
 

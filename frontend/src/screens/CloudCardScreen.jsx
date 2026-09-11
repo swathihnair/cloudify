@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Star, Sparkles } from 'lucide-react'
 import DoodleOverlay from '../components/DoodleOverlay'
 import Mascot from '../components/Mascot'
+import FloatingClouds from '../components/FloatingClouds'
 import useCloudHistory from '../hooks/useCloudHistory'
 
 export default function CloudCardScreen() {
@@ -38,9 +39,12 @@ export default function CloudCardScreen() {
   const region = cloudData.region || { x: 25, y: 25, width: 50, height: 50 }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col relative">
+      {/* Floating background clouds */}
+      <FloatingClouds />
+
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

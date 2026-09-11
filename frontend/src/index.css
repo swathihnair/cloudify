@@ -10,3 +10,127 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ========================================
+   DREAMY CLOUD ANIMATIONS
+   ======================================== */
+
+/* Slow floating - Large back layer clouds */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-12px) translateX(15px);
+  }
+}
+
+/* Medium speed - Mid-layer clouds */
+@keyframes floatMid {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-10px);
+  }
+}
+
+/* Fast floating - Front accent clouds */
+@keyframes floatFast {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(8px);
+  }
+}
+
+/* Smooth 2D drifting - Slower drift */
+@keyframes driftSlow {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(30px, 20px);
+  }
+  50% {
+    transform: translate(20px, 40px);
+  }
+  75% {
+    transform: translate(-10px, 30px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+/* Smooth 2D drifting - Faster drift */
+@keyframes driftFast {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(-40px, 30px);
+  }
+  50% {
+    transform: translate(-20px, 50px);
+  }
+  75% {
+    transform: translate(20px, 35px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+/* Animation utility classes */
+.animate-float-slow {
+  animation: floatSlow 12s ease-in-out infinite;
+}
+
+.animate-float-mid {
+  animation: floatMid 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: floatFast 5s ease-in-out infinite;
+}
+
+.animate-drift-slow {
+  animation: driftSlow 20s ease-in-out infinite;
+}
+
+.animate-drift-fast {
+  animation: driftFast 15s ease-in-out infinite;
+}
+
+/* ========================================
+   GLASSMORPHISM COMPONENTS
+   ======================================== */
+
+/* Pillowy cloud container - cards, modals */
+.cloud-container {
+  @apply bg-white/70 backdrop-blur-md border border-white/50 rounded-3xl shadow-lg;
+  box-shadow: 0 10px 25px rgba(160, 200, 255, 0.3);
+}
+
+/* Soft cloud button */
+.cloud-button {
+  @apply bg-gradient-to-r from-blue-400 to-sky-300 text-white font-bold rounded-full shadow-md transform transition hover:shadow-xl active:scale-95;
+}
+
+/* Soft shadow utility */
+.shadow-cloud {
+  box-shadow: 0 10px 25px rgba(160, 200, 255, 0.3);
+}
+
+/* ========================================
+   SOFT COLOR PALETTE
+   ======================================== */
+
+:root {
+  --sky-soft: #D0E8FF;
+  --sky-lighter: #E8F3FF;
+  --cloud-white: #FFFFFF;
+  --lavender-light: #F0F4FF;
+}

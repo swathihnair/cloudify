@@ -1,93 +1,71 @@
 import React from 'react'
-import './CloudBackground.css'
 
 export default function CloudBackground() {
   return (
-    <div className="fixed inset-0 -z-10 bg-gradient-to-b from-sky-300 via-sky-200 to-blue-50 overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-[#D0E8FF] via-[#E8F3FF] to-[#FFFFFF]">
       
-      {/* Far Background - Slowest, Most Blurred */}
-      <svg
-        className="absolute w-full h-full opacity-30 blur-sm animate-float-slow"
-        viewBox="0 0 1200 400"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="cloudGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 0.6 }} />
-            <stop offset="100%" style={{ stopColor: '#ffffff', stopOpacity: 0.2 }} />
-          </linearGradient>
-        </defs>
+      {/* Back Layer - Slow, large, soft clouds */}
+      <div className="absolute inset-0 opacity-40 animate-float-slow">
+        {/* Large cloud 1 */}
+        <svg 
+          className="absolute top-10 -left-20 w-96 text-white fill-current blur-[2px]" 
+          viewBox="0 0 100 60"
+          preserveAspectRatio="none"
+        >
+          <path d="M10 40 Q20 20 40 30 Q60 10 80 30 Q90 20 100 40 Z" />
+        </svg>
         
-        {/* Cloud 1 - Far left */}
-        <g transform="translate(100, 80)">
-          <ellipse cx="40" cy="30" rx="45" ry="25" fill="url(#cloudGrad1)" />
-          <ellipse cx="10" cy="35" rx="35" ry="22" fill="url(#cloudGrad1)" />
-          <ellipse cx="70" cy="35" rx="40" ry="23" fill="url(#cloudGrad1)" />
-        </g>
-        
-        {/* Cloud 2 - Right */}
-        <g transform="translate(800, 120)">
-          <ellipse cx="40" cy="30" rx="50" ry="28" fill="url(#cloudGrad1)" />
-          <ellipse cx="5" cy="38" rx="38" ry="24" fill="url(#cloudGrad1)" />
-          <ellipse cx="75" cy="38" rx="45" ry="26" fill="url(#cloudGrad1)" />
-        </g>
-      </svg>
+        {/* Large cloud 2 */}
+        <svg 
+          className="absolute top-1/2 -right-20 w-[30rem] text-white fill-current blur-[2px]" 
+          viewBox="0 0 100 60"
+          preserveAspectRatio="none"
+        >
+          <path d="M10 40 Q20 20 40 30 Q60 10 80 30 Q90 20 100 40 Z" />
+        </svg>
+      </div>
 
-      {/* Mid Background - Medium Speed, Medium Blur */}
-      <svg
-        className="absolute w-full h-full opacity-40 blur-xs animate-float-medium"
-        viewBox="0 0 1200 400"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="cloudGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 0.7 }} />
-            <stop offset="100%" style={{ stopColor: '#ffffff', stopOpacity: 0.3 }} />
-          </linearGradient>
-        </defs>
-        
+      {/* Mid Layer - Medium speed, more visible */}
+      <div className="absolute inset-0 opacity-70 animate-float-mid">
         {/* Cloud 3 */}
-        <g transform="translate(300, 150)">
-          <ellipse cx="40" cy="30" rx="48" ry="26" fill="url(#cloudGrad2)" />
-          <ellipse cx="8" cy="36" rx="36" ry="23" fill="url(#cloudGrad2)" />
-          <ellipse cx="72" cy="36" rx="42" ry="25" fill="url(#cloudGrad2)" />
-        </g>
+        <svg 
+          className="absolute top-1/3 -left-10 w-80 text-white fill-current drop-shadow-sm" 
+          viewBox="0 0 200 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M 20 70 A 30 30 0 0 1 70 40 A 35 35 0 0 1 140 40 A 30 30 0 0 1 180 70 Z" />
+        </svg>
         
         {/* Cloud 4 */}
-        <g transform="translate(950, 200)">
-          <ellipse cx="40" cy="30" rx="52" ry="28" fill="url(#cloudGrad2)" />
-          <ellipse cx="5" cy="38" rx="40" ry="25" fill="url(#cloudGrad2)" />
-          <ellipse cx="75" cy="38" rx="48" ry="27" fill="url(#cloudGrad2)" />
-        </g>
-      </svg>
+        <svg 
+          className="absolute top-2/3 right-1/4 w-72 text-white fill-current drop-shadow-sm" 
+          viewBox="0 0 200 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M 20 70 A 30 30 0 0 1 70 40 A 35 35 0 0 1 140 40 A 30 30 0 0 1 180 70 Z" />
+        </svg>
+      </div>
 
-      {/* Foreground - Fastest, Least Blurred */}
-      <svg
-        className="absolute w-full h-full opacity-50 blur-[0px] animate-float-fast"
-        viewBox="0 0 1200 400"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="cloudGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 0.8 }} />
-            <stop offset="100%" style={{ stopColor: '#ffffff', stopOpacity: 0.4 }} />
-          </linearGradient>
-        </defs>
-        
+      {/* Front Accent Layer - Faster, small fluffy highlights */}
+      <div className="absolute inset-0 opacity-90 animate-float-fast">
         {/* Cloud 5 */}
-        <g transform="translate(150, 280)">
-          <ellipse cx="40" cy="30" rx="46" ry="25" fill="url(#cloudGrad3)" />
-          <ellipse cx="12" cy="35" rx="34" ry="22" fill="url(#cloudGrad3)" />
-          <ellipse cx="68" cy="35" rx="40" ry="24" fill="url(#cloudGrad3)" />
-        </g>
+        <svg 
+          className="absolute bottom-10 right-5 w-64 text-white fill-current drop-shadow-md" 
+          viewBox="0 0 200 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M 20 70 A 25 25 0 0 1 60 45 A 30 30 0 0 1 130 45 A 25 25 0 0 1 170 70 Z" />
+        </svg>
         
         {/* Cloud 6 */}
-        <g transform="translate(700, 320)">
-          <ellipse cx="40" cy="30" rx="50" ry="27" fill="url(#cloudGrad3)" />
-          <ellipse cx="8" cy="37" rx="38" ry="24" fill="url(#cloudGrad3)" />
-          <ellipse cx="72" cy="37" rx="44" ry="26" fill="url(#cloudGrad3)" />
-        </g>
-      </svg>
+        <svg 
+          className="absolute top-1/4 left-1/2 w-56 text-white fill-current drop-shadow-md" 
+          viewBox="0 0 200 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M 20 70 A 25 25 0 0 1 60 45 A 30 30 0 0 1 130 45 A 25 25 0 0 1 170 70 Z" />
+        </svg>
+      </div>
 
     </div>
   )

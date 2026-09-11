@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Mascot from '../components/Mascot'
+import FloatingClouds from '../components/FloatingClouds'
 import usePrediction from '../hooks/usePrediction'
 import useCloudHistory from '../hooks/useCloudHistory'
 
@@ -75,9 +76,9 @@ export default function ProcessingScreen() {
   }, [location.state, navigate, predict, addCloud])
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative">
       {/* Mascot */}
-      <div className="mb-8 lg:mb-12">
+      <div className="mb-8 lg:mb-12 relative z-10">
         <Mascot mood="excited" size="lg" />
       </div>
 
@@ -85,13 +86,13 @@ export default function ProcessingScreen() {
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 text-center"
+        className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 text-center relative z-10"
       >
         Analyzing Cloud...
       </motion.h2>
 
       {/* Progress Card */}
-      <div className="w-full max-w-md lg:max-w-xl rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-6 sm:p-8">
+      <div className="w-full max-w-md lg:max-w-xl cloud-container p-6 sm:p-8 relative z-10">
         {/* Progress Bar */}
         <div className="mb-6">
           <div className="bg-sky-100 rounded-full h-3 overflow-hidden">

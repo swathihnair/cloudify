@@ -10,7 +10,7 @@ export default function Navbar() {
   const showBack = location.pathname !== '/'
   
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/40 border-b border-white/20 shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 cloud-container border-b border-white/30 m-0 rounded-none">
       <div className="w-full max-w-full px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         
         {/* Left Section: Back Button or Logo */}
@@ -46,7 +46,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4">
           <button
             onClick={() => navigate('/history')}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-full hover:shadow-lg transition-all active:scale-95 text-sm sm:text-base font-medium"
+            className="cloud-button px-3 sm:px-4 py-2 text-sm sm:text-base"
           >
             <CloudDrizzle size={18} />
             <span className="hidden xs:inline">My Clouds</span>

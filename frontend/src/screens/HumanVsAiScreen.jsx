@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, CheckCircle, Home, MessageCircle } from 'lucide-react'
 import Mascot from '../components/Mascot'
+import FloatingClouds from '../components/FloatingClouds'
 import useCloudHistory from '../hooks/useCloudHistory'
 
 const GUESS_OPTIONS = ['dinosaur', 'dragon', 'bunny', 'whale', 'unicorn']
@@ -48,9 +49,12 @@ export default function HumanVsAiScreen() {
   const isCorrect = userGuess === cloudData.category
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col relative">
+      {/* Floating background clouds */}
+      <FloatingClouds />
+
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -64,7 +68,7 @@ export default function HumanVsAiScreen() {
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6 lg:mb-8">
+      <div className="flex justify-center mb-6 lg:mb-8 relative z-10">
         <Mascot mood={mascotMood} size="lg" />
       </div>
 
@@ -72,7 +76,7 @@ export default function HumanVsAiScreen() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col max-w-4xl mx-auto w-full"
+        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col max-w-4xl mx-auto w-full relative z-10"
       >
         <AnimatePresence mode="wait">
           {!submitted ? (

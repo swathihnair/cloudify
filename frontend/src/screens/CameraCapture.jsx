@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Camera, Upload, ArrowLeft, CheckCircle } from 'lucide-react'
 import Mascot from '../components/Mascot'
+import FloatingClouds from '../components/FloatingClouds'
 
 export default function CameraCapture() {
   const navigate = useNavigate()
@@ -34,33 +35,36 @@ export default function CameraCapture() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#D0E8FF] via-[#E8F3FF] to-[#FFFFFF] p-4 sm:p-6 lg:p-8 flex flex-col relative">
+      {/* Floating background clouds */}
+      <FloatingClouds />
+
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between relative z-10">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/')}
-          className="rounded-full bg-white/80 backdrop-blur-md p-3 shadow-md hover:bg-white transition-colors"
+          className="cloud-container rounded-full p-3 shadow-md hover:shadow-lg transition-all"
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-xl sm:text-2xl font-bold text-white">Capture Cloud</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg">Capture Cloud</h2>
         <div className="w-11" />
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6 lg:mb-8">
+      <div className="flex justify-center mb-6 lg:mb-8 relative z-10">
         <Mascot mood={preview ? 'excited' : 'curious'} size="md" />
       </div>
 
       {/* Content Container */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full">
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full relative z-10">
         {/* Preview Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col"
+          className="cloud-container p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col"
         >
           {!preview ? (
             <div className="flex-1 flex items-center justify-center">
