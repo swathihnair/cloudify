@@ -35,7 +35,7 @@ export default function CloudHistoryScreen() {
   }
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <motion.button
@@ -46,7 +46,7 @@ export default function CloudHistoryScreen() {
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-xl font-bold text-white">My Cloud Gallery</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">My Cloud Gallery</h2>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -59,7 +59,7 @@ export default function CloudHistoryScreen() {
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 lg:mb-8">
         <Mascot mood={history.length > 0 ? 'idle' : 'sleep'} size="md" />
       </div>
 
@@ -95,7 +95,7 @@ export default function CloudHistoryScreen() {
             key={f.value}
             whileTap={{ scale: 0.95 }}
             onClick={() => setFilter(f.value)}
-            className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition-colors text-sm sm:text-base ${
               filter === f.value
                 ? 'bg-white text-sky-600 shadow-md'
                 : 'bg-white/60 text-sky-700 hover:bg-white/80'
@@ -112,7 +112,7 @@ export default function CloudHistoryScreen() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-8 text-center h-full flex flex-col items-center justify-center"
+            className="rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-8 text-center h-full flex flex-col items-center justify-center max-w-4xl mx-auto"
           >
             <p className="text-sky-600 text-lg font-medium mb-2">No clouds yet</p>
             <p className="text-sky-500 text-sm mb-6">
@@ -135,7 +135,7 @@ export default function CloudHistoryScreen() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mb-6 grid grid-cols-3 gap-3"
+              className="mb-6 grid grid-cols-3 gap-3 max-w-4xl mx-auto w-full"
             >
               <div className="rounded-lg bg-white/80 p-3 text-center">
                 <p className="text-sky-600 text-xs font-semibold mb-1">Total</p>
@@ -161,7 +161,7 @@ export default function CloudHistoryScreen() {
             </motion.div>
 
             {/* Cloud List as Cards */}
-            <div className="space-y-3 pb-4">
+            <div className="space-y-3 pb-4 max-w-4xl mx-auto w-full">
               {filteredClouds.map((cloud, index) => (
                 <motion.div
                   key={cloud.id}
@@ -174,7 +174,7 @@ export default function CloudHistoryScreen() {
                 >
                   <div className="flex gap-4">
                     {/* Image */}
-                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-sky-200 to-blue-100">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-sky-200 to-blue-100">
                       {cloud.imageData ? (
                         <img
                           src={cloud.imageData}
@@ -238,7 +238,7 @@ export default function CloudHistoryScreen() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate('/capture')}
-          className="mt-6 w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 font-bold shadow-lg"
+          className="mt-6 w-full max-w-md mx-auto rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg hover:shadow-xl transition-shadow"
         >
           Scan Another Cloud ✨
         </motion.button>

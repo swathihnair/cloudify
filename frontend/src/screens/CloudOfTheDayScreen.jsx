@@ -89,7 +89,7 @@ export default function CloudOfTheDayScreen() {
   })
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <motion.button
@@ -100,12 +100,12 @@ export default function CloudOfTheDayScreen() {
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-xl font-bold text-white">Featured Cloud</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Featured Cloud</h2>
         <div className="w-11" />
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 lg:mb-8">
         <Mascot mood="excited" size="md" />
       </div>
 
@@ -114,7 +114,7 @@ export default function CloudOfTheDayScreen() {
         initial={{ scale: 0.9, opacity: 0, rotateY: -10 }}
         animate={{ scale: 1, opacity: 1, rotateY: 0 }}
         transition={{ duration: 0.6 }}
-        className="rounded-xl bg-white shadow-2xl border-8 border-white p-4 mb-6 flex-1 flex flex-col"
+        className="rounded-xl bg-white shadow-2xl border-8 border-white p-4 sm:p-6 mb-6 flex-1 flex flex-col max-w-4xl mx-auto w-full"
       >
         {/* Header Badge */}
         <motion.div
@@ -135,12 +135,12 @@ export default function CloudOfTheDayScreen() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="rounded-lg overflow-hidden mb-3 border-2 border-gray-100 bg-gray-200"
+            className="rounded-lg overflow-hidden mb-3 border-2 border-gray-100 bg-gray-200 flex-1 flex items-center justify-center max-w-sm mx-auto"
           >
             <img
               src={cloud.imageData}
               alt={personality.name || 'Cloud'}
-              className="w-full aspect-square object-cover"
+              className="w-full h-full object-cover"
             />
           </motion.div>
         )}
@@ -151,7 +151,7 @@ export default function CloudOfTheDayScreen() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+          <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 text-center">
             {personality.name || 'Mystery Cloud'}
           </h3>
 
@@ -165,7 +165,7 @@ export default function CloudOfTheDayScreen() {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-3 mb-3">
-            <p className="text-gray-800 text-center italic text-sm">
+            <p className="text-gray-800 text-center italic text-sm sm:text-base">
               "{personality.caption || 'A beautiful cloud in the sky'}"
             </p>
           </div>
@@ -183,7 +183,7 @@ export default function CloudOfTheDayScreen() {
       </motion.div>
 
       {/* Action Buttons */}
-      <div className="space-y-3">
+      <div className="space-y-3 max-w-md mx-auto w-full">
         <motion.button
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -191,7 +191,7 @@ export default function CloudOfTheDayScreen() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSave}
-          className="w-full rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 font-bold shadow-lg flex items-center justify-center gap-2"
+          className="w-full rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-shadow"
         >
           <Star className="w-5 h-5 fill-white" />
           Save to Collection
@@ -204,7 +204,7 @@ export default function CloudOfTheDayScreen() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleExport}
-          className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-600 px-6 py-3 font-semibold shadow-md flex items-center justify-center gap-2 hover:bg-white transition-colors"
+          className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-600 px-6 py-3 sm:py-4 font-semibold shadow-md flex items-center justify-center gap-2 hover:bg-white transition-colors"
         >
           <Download className="w-5 h-5" />
           Export Card
@@ -217,7 +217,7 @@ export default function CloudOfTheDayScreen() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate('/history')}
-          className="w-full rounded-2xl bg-white/60 backdrop-blur-sm text-sky-700 px-6 py-3 font-semibold hover:bg-white/80 transition-colors"
+          className="w-full rounded-2xl bg-white/60 backdrop-blur-sm text-sky-700 px-6 py-3 sm:py-4 font-semibold hover:bg-white/80 transition-colors"
         >
           View My Collection
         </motion.button>

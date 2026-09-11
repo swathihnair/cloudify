@@ -48,7 +48,7 @@ export default function HumanVsAiScreen() {
   const isCorrect = userGuess === cloudData.category
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <motion.button
@@ -59,12 +59,12 @@ export default function HumanVsAiScreen() {
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-xl font-bold text-white">Your Guess?</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Your Guess?</h2>
         <div className="w-11" />
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 lg:mb-8">
         <Mascot mood={mascotMood} size="lg" />
       </div>
 
@@ -72,7 +72,7 @@ export default function HumanVsAiScreen() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-6 mb-6 flex-1 flex flex-col"
+        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col max-w-4xl mx-auto w-full"
       >
         <AnimatePresence mode="wait">
           {!submitted ? (
@@ -84,7 +84,7 @@ export default function HumanVsAiScreen() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col"
             >
-              <h3 className="text-2xl font-bold text-sky-900 mb-4 text-center">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-sky-900 mb-4 text-center">
                 What do you think it is?
               </h3>
 
@@ -111,7 +111,7 @@ export default function HumanVsAiScreen() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleGuessSelect(option)}
-                    className={`w-full px-4 py-3 rounded-xl font-semibold transition-all ${
+                    className={`w-full px-4 py-3 sm:py-4 rounded-xl font-semibold transition-all text-sm sm:text-base ${
                       userGuess === option
                         ? 'bg-gradient-to-r from-sky-500 to-blue-500 text-white shadow-lg'
                         : 'bg-sky-100 text-sky-700 hover:bg-sky-200'
@@ -129,7 +129,7 @@ export default function HumanVsAiScreen() {
                 whileTap={userGuess ? { scale: 0.98 } : {}}
                 onClick={handleSubmit}
                 disabled={!userGuess}
-                className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-4 font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-xl"
               >
                 Submit My Guess ✨
               </motion.button>
@@ -148,11 +148,11 @@ export default function HumanVsAiScreen() {
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200 }}
-                  className="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 text-center border-2 border-green-300"
+                  className="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 sm:p-8 text-center border-2 border-green-300"
                 >
                   <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-3" />
-                  <p className="text-green-900 font-bold text-lg mb-2">You Got It! 🎉</p>
-                  <p className="text-green-800 text-sm">
+                  <p className="text-green-900 font-bold text-lg sm:text-xl mb-2">You Got It! 🎉</p>
+                  <p className="text-green-800 text-sm sm:text-base">
                     Great job! You and the AI agree!
                   </p>
                 </motion.div>
@@ -161,10 +161,10 @@ export default function HumanVsAiScreen() {
                   initial={{ scale: 0.8 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', stiffness: 200 }}
-                  className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl p-6 text-center border-2 border-blue-300"
+                  className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl p-6 sm:p-8 text-center border-2 border-blue-300"
                 >
                   <MessageCircle className="w-16 h-16 text-blue-600 mx-auto mb-3" />
-                  <p className="text-blue-900 font-bold text-lg mb-2">Different Opinions! 💭</p>
+                  <p className="text-blue-900 font-bold text-lg sm:text-xl mb-2">Different Opinions! 💭</p>
                   <p className="text-blue-800 text-sm mb-4">
                     You guessed <span className="font-bold">{userGuess?.toUpperCase()}</span>
                   </p>
@@ -178,11 +178,11 @@ export default function HumanVsAiScreen() {
               <div className="grid grid-cols-2 gap-3 bg-white/50 rounded-2xl p-4">
                 <div className="bg-blue-50 rounded-xl p-3 text-center border border-blue-200">
                   <p className="text-blue-600 text-xs font-semibold mb-2">Your Guess</p>
-                  <p className="text-blue-900 font-bold text-lg">{userGuess?.toUpperCase()}</p>
+                  <p className="text-blue-900 font-bold text-sm sm:text-base">{userGuess?.toUpperCase()}</p>
                 </div>
                 <div className="bg-purple-50 rounded-xl p-3 text-center border border-purple-200">
                   <p className="text-purple-600 text-xs font-semibold mb-2">AI Guess</p>
-                  <p className="text-purple-900 font-bold text-lg">{cloudData.category?.toUpperCase()}</p>
+                  <p className="text-purple-900 font-bold text-sm sm:text-base">{cloudData.category?.toUpperCase()}</p>
                 </div>
               </div>
 
@@ -194,7 +194,7 @@ export default function HumanVsAiScreen() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate('/history')}
-                className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 font-bold shadow-lg flex items-center justify-center gap-2"
+                className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-shadow"
               >
                 <Home className="w-5 h-5" />
                 View Your Gallery

@@ -34,7 +34,7 @@ export default function CameraCapture() {
   }
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <motion.button
@@ -45,51 +45,58 @@ export default function CameraCapture() {
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-2xl font-bold text-white">Capture Cloud</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Capture Cloud</h2>
         <div className="w-11" />
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 lg:mb-8">
         <Mascot mood={preview ? 'excited' : 'curious'} size="md" />
       </div>
 
-      {/* Preview Card */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-6 mb-6 flex-1 flex flex-col"
-      >
-        {!preview ? (
-          <div className="aspect-square bg-gradient-to-br from-sky-100 to-blue-100 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-sky-300 mb-4">
-            <Cloud className="w-24 h-24 text-sky-300 mb-4" />
-            <p className="text-sky-600 font-medium mb-2">No cloud selected</p>
-            <p className="text-sky-500 text-sm text-center px-4">
-              Upload or capture a photo of clouds
-            </p>
-          </div>
-        ) : (
-          <div className="relative aspect-square rounded-2xl overflow-hidden mb-4">
-            <img
-              src={preview}
-              alt="Cloud preview"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute top-4 right-4 bg-green-500 text-white rounded-full p-2 shadow-lg">
-              <CheckCircle className="w-6 h-6" />
+      {/* Content Container */}
+      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full">
+        {/* Preview Card */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col"
+        >
+          {!preview ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="w-full max-w-sm aspect-square bg-gradient-to-br from-sky-100 to-blue-100 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-sky-300">
+                <Cloud className="w-20 h-20 sm:w-24 sm:h-24 text-sky-300 mb-4" />
+                <p className="text-sky-600 font-medium mb-2 text-center">No cloud selected</p>
+                <p className="text-sky-500 text-sm text-center px-4">
+                  Upload or capture a photo of clouds
+                </p>
+              </div>
             </div>
-            <div className="absolute inset-0 border-4 border-white/50 rounded-2xl" />
-          </div>
-        )}
+          ) : (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative w-full max-w-sm aspect-square rounded-2xl overflow-hidden">
+                <img
+                  src={preview}
+                  alt="Cloud preview"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-4 right-4 bg-green-500 text-white rounded-full p-2 shadow-lg">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <div className="absolute inset-0 border-4 border-white/50 rounded-2xl" />
+              </div>
+            </div>
+          )}
+        </motion.div>
 
         {/* Action Buttons */}
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-md mx-auto w-full">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => cameraInputRef.current?.click()}
             disabled={isLoading}
-            className="w-full rounded-2xl bg-white text-sky-600 px-6 py-4 font-semibold shadow-lg flex items-center justify-center gap-3 disabled:opacity-50"
+            className="w-full rounded-2xl bg-white text-sky-600 px-6 py-4 font-semibold shadow-lg flex items-center justify-center gap-3 disabled:opacity-50 hover:shadow-xl transition-shadow"
           >
             <Camera className="w-6 h-6" />
             {preview ? 'Take Another Photo' : 'Take Photo'}
@@ -100,7 +107,7 @@ export default function CameraCapture() {
             whileTap={{ scale: 0.98 }}
             onClick={() => fileInputRef.current?.click()}
             disabled={isLoading}
-            className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-700 px-6 py-4 font-medium shadow-md flex items-center justify-center gap-3 disabled:opacity-50"
+            className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-700 px-6 py-4 font-medium shadow-md flex items-center justify-center gap-3 disabled:opacity-50 hover:bg-white transition-colors"
           >
             <Upload className="w-5 h-5" />
             Upload from Gallery
@@ -114,13 +121,13 @@ export default function CameraCapture() {
               whileTap={{ scale: 0.98 }}
               onClick={handleAnalyze}
               disabled={isLoading}
-              className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-4 font-bold shadow-lg disabled:opacity-50"
+              className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-4 font-bold shadow-lg disabled:opacity-50 hover:shadow-xl transition-shadow"
             >
               Analyze Cloud ✨
             </motion.button>
           )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Hidden Inputs */}
       <input

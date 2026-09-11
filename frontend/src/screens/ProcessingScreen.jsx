@@ -31,7 +31,6 @@ export default function ProcessingScreen() {
       return
     }
 
-    // Animate progress through all steps
     const totalDuration = STEPS.reduce((sum, step) => sum + step.duration, 0)
     let elapsed = 0
 
@@ -40,7 +39,6 @@ export default function ProcessingScreen() {
       const newProgress = Math.min((elapsed / totalDuration) * 100, 100)
       setProgress(newProgress)
 
-      // Update current step based on progress
       let accumulatedDuration = 0
       for (let i = 0; i < STEPS.length; i++) {
         accumulatedDuration += STEPS[i].duration
@@ -51,18 +49,15 @@ export default function ProcessingScreen() {
       }
     }, 50)
 
-    // Perform prediction
     predict(file)
       .then((result) => {
         clearInterval(interval)
 
-        // Save to history
         const cloudCard = addCloud({
           imageData: preview,
           ...result
         })
 
-        // Navigate to reveal screen
         setTimeout(() => {
           navigate(`/reveal/${cloudCard.id}`, { state: { cloudData: cloudCard } })
         }, 300)
@@ -80,9 +75,9 @@ export default function ProcessingScreen() {
   }, [location.state, navigate, predict, addCloud])
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center">
       {/* Mascot */}
-      <div className="mb-8">
+      <div className="mb-8 lg:mb-12">
         <Mascot mood="excited" size="lg" />
       </div>
 
@@ -90,13 +85,13 @@ export default function ProcessingScreen() {
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-3xl font-bold text-white mb-8 text-center"
+        className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 text-center"
       >
         Analyzing Cloud...
       </motion.h2>
 
       {/* Progress Card */}
-      <div className="w-full rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-6">
+      <div className="w-full max-w-md lg:max-w-xl rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-6 sm:p-8">
         {/* Progress Bar */}
         <div className="mb-6">
           <div className="bg-sky-100 rounded-full h-3 overflow-hidden">
@@ -107,7 +102,7 @@ export default function ProcessingScreen() {
               transition={{ duration: 0.3 }}
             />
           </div>
-          <p className="text-center text-sky-600 font-medium mt-2">
+          <p className="text-center text-sky-600 font-medium mt-2 text-sm sm:text-base">
             {Math.round(progress)}%
           </p>
         </div>
@@ -139,7 +134,7 @@ export default function ProcessingScreen() {
                   </svg>
                 )}
               </div>
-              <span className={`text-sm ${index <= currentStep ? 'text-sky-900 font-medium' : 'text-sky-400'}`}>
+              <span className={`text-sm sm:text-base ${index <= currentStep ? 'text-sky-900 font-medium' : 'text-sky-400'}`}>
                 {step.label}
               </span>
             </motion.div>

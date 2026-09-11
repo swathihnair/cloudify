@@ -28,7 +28,7 @@ export default function PersonalityStats() {
   const stats = personality.stats || {}
 
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <motion.button
@@ -39,12 +39,12 @@ export default function PersonalityStats() {
         >
           <ArrowLeft className="w-5 h-5 text-sky-700" />
         </motion.button>
-        <h2 className="text-xl font-bold text-white">Personality Stats</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Personality Stats</h2>
         <div className="w-11" />
       </div>
 
       {/* Mascot */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 lg:mb-8">
         <Mascot mood="idle" size="md" />
       </div>
 
@@ -52,10 +52,10 @@ export default function PersonalityStats() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-6 mb-6 flex-1 overflow-y-auto"
+        className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 overflow-y-auto max-w-4xl mx-auto w-full"
       >
         {/* Character Name */}
-        <h3 className="text-2xl font-bold text-sky-900 mb-2 text-center">
+        <h3 className="text-2xl sm:text-3xl font-bold text-sky-900 mb-2 text-center">
           {personality.name || 'Cloud Character'}
         </h3>
 
@@ -95,7 +95,7 @@ export default function PersonalityStats() {
             transition={{ delay: 0.5 }}
             className="bg-sky-50 rounded-2xl p-4 mt-6 border-2 border-sky-200"
           >
-            <p className="text-sky-900 text-center italic text-sm">
+            <p className="text-sky-900 text-center italic text-sm sm:text-base">
               💭 "{personality.caption}"
             </p>
           </motion.div>
@@ -103,7 +103,7 @@ export default function PersonalityStats() {
       </motion.div>
 
       {/* Action Buttons */}
-      <div className="space-y-3">
+      <div className="space-y-3 max-w-md mx-auto w-full">
         <motion.button
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -111,7 +111,7 @@ export default function PersonalityStats() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate(`/poll/${id}`, { state: { cloudData } })}
-          className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 font-bold shadow-lg flex items-center justify-center gap-2"
+          className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-shadow"
         >
           What Do You Think?
           <ArrowRight className="w-5 h-5" />
@@ -124,7 +124,7 @@ export default function PersonalityStats() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => navigate('/')}
-          className="w-full rounded-2xl bg-white/60 backdrop-blur-sm text-sky-700 px-6 py-3 font-semibold shadow-md hover:bg-white/80 transition-colors"
+          className="w-full rounded-2xl bg-white/60 backdrop-blur-sm text-sky-700 px-6 py-3 sm:py-4 font-semibold shadow-md hover:bg-white/80 transition-colors"
         >
           Back to Home
         </motion.button>
