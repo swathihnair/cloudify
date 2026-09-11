@@ -26,6 +26,7 @@ export default function ProcessingScreen() {
   useEffect(() => {
     const file = location.state?.file
     const preview = location.state?.preview
+    const huntingFor = location.state?.huntingFor // Get the shape user is hunting for
 
     if (!file) {
       navigate('/')
@@ -50,12 +51,12 @@ export default function ProcessingScreen() {
       }
     }, 50)
 
-    predict(file)
+    predict(file, huntingFor) // Pass huntingFor to predict
       .then((result) => {
         clearInterval(interval)
 
         const cloudCard = addCloud({
-          imageData: preview,
+          imageData: `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${result.outlined_image_url}`, // Use outlined version
           ...result
         })
 

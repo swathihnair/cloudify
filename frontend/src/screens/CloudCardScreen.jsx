@@ -81,8 +81,8 @@ export default function CloudCardScreen() {
                   alt="Cloud"
                   className="w-full h-auto object-contain"
                 />
-                {/* Doodle Overlay */}
-                <AnimatePresence>
+                {/* Doodle Overlay - DISABLED */}
+                {/* <AnimatePresence>
                   {showOverlay && (
                     <DoodleOverlay
                       imageRef={imageRef}
@@ -91,7 +91,7 @@ export default function CloudCardScreen() {
                       isVisible={true}
                     />
                   )}
-                </AnimatePresence>
+                </AnimatePresence> */}
               </>
             ) : (
               <div className="w-full h-56 flex items-center justify-center">

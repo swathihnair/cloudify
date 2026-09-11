@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Camera, Upload, ArrowLeft, CheckCircle } from 'lucide-react'
 import Mascot from '../components/Mascot'
@@ -7,6 +7,8 @@ import FloatingClouds from '../components/FloatingClouds'
 
 export default function CameraCapture() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const lookingFor = location.state?.lookingFor // Get the matched shape from Object Match
   const fileInputRef = useRef(null)
   const cameraInputRef = useRef(null)
   const [preview, setPreview] = useState(null)
@@ -29,7 +31,7 @@ export default function CameraCapture() {
     if (selectedFile) {
       setIsLoading(true)
       setTimeout(() => {
-        navigate('/processing', { state: { file: selectedFile, preview } })
+        navigate('/processing', { state: { file: selectedFile, preview, huntingFor: lookingFor } })
       }, 300)
     }
   }
@@ -52,6 +54,49 @@ export default function CameraCapture() {
         <h2 className="text-xl sm:text-2xl font-bold text-white drop-shadow-lg">Capture Cloud</h2>
         <div className="w-11" />
       </div>
+
+      {/* Looking For Banner */}
+      {lookingFor && (
+        <motion.div
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-6 relative z-10 max-w-4xl mx-auto w-full"
+        >
+          <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 rounded-2xl p-4 shadow-2xl border-2 border-white/30">
+            <div className="flex items-center gap-4">
+              <div className="text-5xl">
+                {lookingFor === 'IceCream' && '🍦'}
+                {lookingFor === 'Lion' && '🦁'}
+                {lookingFor === 'Dog' && '🐕'}
+                {lookingFor === 'Bear' && '🐻'}
+                {lookingFor === 'Horse' && '🐴'}
+                {lookingFor === 'Cat' && '🐱'}
+                {lookingFor === 'Rabbit' && '🐰'}
+                {lookingFor === 'Elephant' && '🐘'}
+                {lookingFor === 'Dinosaur' && '🦖'}
+                {lookingFor === 'Dragon' && '🐉'}
+                {lookingFor === 'Whale' && '🐋'}
+                {lookingFor === 'Bird' && '🐦'}
+                {lookingFor === 'Butterfly' && '🦋'}
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm font-semibold mb-1">🎯 ON A MISSION</p>
+                <p className="text-white text-lg font-black">
+                  Looking for {lookingFor === 'IceCream' ? 'Fluffy' : lookingFor} Clouds!
+                </p>
+              </div>
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="text-3xl"
+              >
+                🔍
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Mascot */}
       <div className="flex justify-center mb-6 lg:mb-8 relative z-10">

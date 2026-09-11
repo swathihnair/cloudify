@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
 import axios from 'axios'
 
-const MOCK_MODE = true // Toggle for standalone development
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const MOCK_MODE = false // Toggle for standalone development
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 // Mock prediction data for testing
 const MOCK_PREDICTIONS = {
@@ -108,7 +108,7 @@ export const usePrediction = () => {
   const [error, setError] = useState(null)
   const [prediction, setPrediction] = useState(null)
 
-  const predict = useCallback(async (imageFile) => {
+  const predict = useCallback(async (imageFile, huntingFor = null) => {
     setLoading(true)
     setError(null)
 
@@ -128,14 +128,38 @@ export const usePrediction = () => {
         // Real API call
         const formData = new FormData()
         formData.append('file', imageFile)
+        
+        // Build URL with query parameter if hunting
+        let url = `${API_BASE}/api/analyze`
+        if (huntingFor) {
+          url += `?hunting_for=${encodeURIComponent(huntingFor)}`
+        }
 
-        const response = await axios.post(`${API_BASE}/predict`, formData, {
+        const response = await axios.post(url, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
           timeout: 30000
         })
 
-        setPrediction(response.data)
-        return response.data
+        // Map backend response to frontend format
+        const data = response.data
+        const mappedData = {
+          category: data.top_guess?.toLowerCase(),
+          confidence: data.confidence_score,
+          alt_category: data.runner_up_guess?.toLowerCase(),
+          alt_confidence: data.runner_up_score,
+          original_image_url: data.original_image_url,
+          outlined_image_url: data.outlined_image_url, // NEW: outlined version
+          region: { x: 25, y: 25, width: 50, height: 50 }, // placeholder
+          personality: {
+            name: data.character_name,
+            trait: data.personality_type,
+            caption: data.quote,
+            stats: data.stats
+          }
+        }
+
+        setPrediction(mappedData)
+        return mappedData
       }
     } catch (err) {
       const errorMessage = err.response?.data?.detail || err.message || 'Failed to analyze cloud'

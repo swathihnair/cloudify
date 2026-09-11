@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, Depends, HTTPException
+from fastapi import FastAPI, UploadFile, File, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
@@ -43,11 +43,14 @@ class SaveRequest(BaseModel):
 @app.post("/api/analyze")
 async def analyze_cloud(
     file: UploadFile = File(...),
+    hunting_for: Optional[str] = Query(None),
     db: Session = Depends(get_db)
 ):
     """Analyze uploaded cloud image and generate dynamic character."""
     print("\n" + "=" * 80)
     print("🆕 NEW ANALYSIS REQUEST RECEIVED")
+    if hunting_for:
+        print(f"🎯 USER IS HUNTING FOR: {hunting_for}")
     print("=" * 80)
     try:
         # Read and save image
@@ -65,8 +68,18 @@ async def analyze_cloud(
         
         # Analyze image
         print("Starting image analysis...")
-        analysis = analyze_cloud_image(image_bytes)
+        analysis = analyze_cloud_image(image_bytes, force_shape=hunting_for)
         print(f"Analysis complete: {analysis.get('character_name')}")
+        
+        # Save outlined image (with detected shape highlighted)
+        outlined_filename = f"{file_id}_outlined.{file_extension}"
+        outlined_filepath = os.path.join(UPLOAD_DIR, outlined_filename)
+        if 'outlined_image' in analysis:
+            analysis['outlined_image'].save(outlined_filepath)
+            print(f"Saved outlined image to: {outlined_filepath}")
+            outlined_image_url = f"/uploads/{outlined_filename}"
+        else:
+            outlined_image_url = f"/uploads/{filename}"  # Fallback to original
         
         # Create database entry
         cloud_scan = CloudScan(
@@ -94,6 +107,7 @@ async def analyze_cloud(
         response_data = {
             "id": cloud_scan.id,
             "original_image_url": cloud_scan.original_image_url,
+            "outlined_image_url": outlined_image_url,  # NEW: Image with outline
             "character_name": cloud_scan.character_name,
             "top_guess": cloud_scan.top_guess,
             "confidence_score": cloud_scan.confidence_score,
@@ -126,6 +140,52 @@ async def analyze_cloud(
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/find-cloud")
+async def find_cloud_for_object(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+    """
+    Upload an object image and find which cloud shape it matches.
+    Uses CLIP to compare the object against our cloud shape categories.
+    """
+    try:
+        # Read image
+        image_bytes = await file.read()
+        print(f"Received object image: {len(image_bytes)} bytes")
+        
+        # Use CLIP to analyze what the object is
+        from analyzer import analyze_object_with_clip
+        
+        print("Analyzing object with CLIP...")
+        result = analyze_object_with_clip(image_bytes)
+        
+        if not result:
+            raise HTTPException(status_code=400, detail="Could not analyze object")
+        
+        print(f"Object matched to: {result['matched_shape']} ({result['confidence']}%)")
+        
+        return JSONResponse(
+            content={
+                "matched_shape": result['matched_shape'],
+                "confidence": result['confidence'],
+                "all_matches": result['all_matches'],
+                "message": f"Your object looks like a {result['matched_shape']}! Try uploading a cloud photo to find matching shapes."
+            },
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
+    
+    except Exception as e:
+        print(f"Error in find_cloud_for_object: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/clouds/{cloud_id}/poll")
 async def submit_poll(

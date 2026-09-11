@@ -27,6 +27,13 @@ def test_image(image_path):
             print(f"  {i}. {shape['shape']} - {shape['confidence']}% ({shape['region']})")
         print(f"\nPersonality: {result['personality_type']}")
         print(f"Quote: {result['quote']}")
+        
+        # Save outlined image if available
+        if 'outlined_image' in result:
+            output_path = image_path.replace('.', '_outlined.')
+            result['outlined_image'].save(output_path)
+            print(f"\n✅ Outlined image saved to: {output_path}")
+        
         print("=" * 80 + "\n")
         
     except Exception as e:
