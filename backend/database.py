@@ -23,6 +23,7 @@ class CloudScan(Base):
     confidence_score = Column(Integer, nullable=False)
     runner_up_guess = Column(String, nullable=False)
     runner_up_score = Column(Integer, nullable=False)
+    identified_shapes = Column(JSON, nullable=True)  # NEW: List of all detected shapes with scores
     quote = Column(String, nullable=False)
     personality_type = Column(String, nullable=False)
     energy_score = Column(Integer, nullable=False)

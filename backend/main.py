@@ -1,12 +1,17 @@
 from fastapi import FastAPI, UploadFile, File, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import os
 import uuid
 from typing import Optional
+
+# Load environment variables
+load_dotenv()
 
 from database import get_db, CloudScan
 from analyzer import analyze_cloud_image, generate_poll_response
@@ -41,6 +46,9 @@ async def analyze_cloud(
     db: Session = Depends(get_db)
 ):
     """Analyze uploaded cloud image and generate dynamic character."""
+    print("\n" + "=" * 80)
+    print("🆕 NEW ANALYSIS REQUEST RECEIVED")
+    print("=" * 80)
     try:
         # Read and save image
         image_bytes = await file.read()
@@ -68,6 +76,7 @@ async def analyze_cloud(
             confidence_score=analysis["confidence_score"],
             runner_up_guess=analysis["runner_up_guess"],
             runner_up_score=analysis["runner_up_score"],
+            identified_shapes=analysis.get("identified_shapes", []),  # NEW: Save all shapes
             quote=analysis["quote"],
             personality_type=analysis["personality_type"],
             energy_score=analysis["energy_score"],
@@ -81,7 +90,8 @@ async def analyze_cloud(
         db.refresh(cloud_scan)
         print(f"Saved to database with ID: {cloud_scan.id}")
         
-        return {
+        # Return response with no-cache headers
+        response_data = {
             "id": cloud_scan.id,
             "original_image_url": cloud_scan.original_image_url,
             "character_name": cloud_scan.character_name,
@@ -89,6 +99,7 @@ async def analyze_cloud(
             "confidence_score": cloud_scan.confidence_score,
             "runner_up_guess": cloud_scan.runner_up_guess,
             "runner_up_score": cloud_scan.runner_up_score,
+            "identified_shapes": cloud_scan.identified_shapes,  # NEW: Return all shapes
             "quote": cloud_scan.quote,
             "personality_type": cloud_scan.personality_type,
             "energy_score": cloud_scan.energy_score,
@@ -96,6 +107,19 @@ async def analyze_cloud(
             "stats": cloud_scan.stats,
             "emoji": cloud_scan.emoji,
         }
+        
+        print("\n" + "=" * 80)
+        print(f"✅ RETURNING RESULT: {cloud_scan.top_guess} ({cloud_scan.confidence_score}%)")
+        print("=" * 80 + "\n")
+        
+        return JSONResponse(
+            content=response_data,
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
     
     except Exception as e:
         print(f"Error in analyze_cloud: {str(e)}")
