@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ArrowLeft, Cloud, CloudDrizzle } from 'lucide-react'
+import { ArrowLeft, Cloud, CloudDrizzle, Wand2 } from 'lucide-react'
 
 export default function Navbar() {
   const navigate = useNavigate()
@@ -42,11 +42,21 @@ export default function Navbar() {
           {/* This space can be used for contextual titles */}
         </div>
 
-        {/* Right Section: My Clouds Button */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Right Section: Navigation Buttons */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            onClick={() => navigate('/cloudify-object')}
+            className="cloud-button px-2 sm:px-3 py-2 text-sm sm:text-base flex items-center gap-1 sm:gap-2"
+            title="Cloudify Anything"
+          >
+            <Wand2 size={18} />
+            <span className="hidden xs:inline">Cloudify</span>
+            <span className="hidden sm:inline">Object</span>
+          </button>
+          
           <button
             onClick={() => navigate('/history')}
-            className="cloud-button px-3 sm:px-4 py-2 text-sm sm:text-base"
+            className="cloud-button px-2 sm:px-3 py-2 text-sm sm:text-base flex items-center gap-1 sm:gap-2"
           >
             <CloudDrizzle size={18} />
             <span className="hidden xs:inline">My Clouds</span>

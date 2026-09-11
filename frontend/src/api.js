@@ -12,6 +12,16 @@ export const analyzeCloud = async (file) => {
   return response.data
 }
 
+export const cloudifyObject = async (file) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  
+  const response = await axios.post(`${API_BASE}/cloudify-object`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+  return response.data
+}
+
 export const submitPoll = async (cloudId, userGuess) => {
   const response = await axios.post(`${API_BASE}/clouds/${cloudId}/poll`, {
     user_guess: userGuess

@@ -9,6 +9,7 @@ import PersonalityStats from './screens/PersonalityStats'
 import HumanVsAiScreen from './screens/HumanVsAiScreen'
 import CloudOfTheDayScreen from './screens/CloudOfTheDayScreen'
 import CloudHistoryScreen from './screens/CloudHistoryScreen'
+import CloudifyObjectScreen from './screens/CloudifyObjectScreen'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/poll/:id" element={<HumanVsAiScreen />} />
             <Route path="/featured" element={<CloudOfTheDayScreen />} />
             <Route path="/history" element={<CloudHistoryScreen />} />
+            <Route path="/cloudify-object" element={<CloudifyObjectScreen />} />
           </Routes>
         </main>
       </div>
