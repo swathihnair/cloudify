@@ -2,21 +2,24 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Cloud, Camera, History as HistoryIcon, Sparkles } from 'lucide-react'
+import Mascot from '../components/Mascot'
 
-export default function Home() {
+export default function LandingScreen() {
   const navigate = useNavigate()
 
   return (
     <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center">
+      {/* Mascot */}
       <motion.div
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ duration: 0.8, type: 'spring' }}
         className="mb-8"
       >
-        <Cloud className="w-32 h-32 text-white drop-shadow-lg" strokeWidth={1.5} />
+        <Mascot mood="idle" size="lg" />
       </motion.div>
 
+      {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,6 +29,7 @@ export default function Home() {
         Cloudify
       </motion.h1>
 
+      {/* Subtitle */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -35,6 +39,7 @@ export default function Home() {
         Discover what magical creatures hide in the clouds
       </motion.p>
 
+      {/* Primary CTA */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -45,9 +50,10 @@ export default function Home() {
         className="rounded-full bg-white text-sky-600 px-8 py-4 font-semibold text-lg shadow-lg flex items-center gap-3 mb-4"
       >
         <Camera className="w-6 h-6" />
-        Scan a Cloud
+        Capture or Upload
       </motion.button>
 
+      {/* Secondary CTA */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -61,6 +67,7 @@ export default function Home() {
         Cloud of the Day
       </motion.button>
 
+      {/* Tertiary CTA */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { analyzeCloud } from '../api'
+import Mascot from '../components/Mascot'
+import usePrediction from '../hooks/usePrediction'
+import useCloudHistory from '../hooks/useCloudHistory'
 
 const STEPS = [
   { label: 'Uploading image', duration: 1000 },
@@ -11,20 +13,25 @@ const STEPS = [
   { label: 'Generating character', duration: 1000 },
 ]
 
-export default function Processing() {
+export default function ProcessingScreen() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { predict } = usePrediction()
+  const { addCloud } = useCloudHistory()
+
   const [currentStep, setCurrentStep] = useState(0)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     const file = location.state?.file
+    const preview = location.state?.preview
+
     if (!file) {
       navigate('/')
       return
     }
 
-    // Animate progress
+    // Animate progress through all steps
     const totalDuration = STEPS.reduce((sum, step) => sum + step.duration, 0)
     let elapsed = 0
 
@@ -33,7 +40,7 @@ export default function Processing() {
       const newProgress = Math.min((elapsed / totalDuration) * 100, 100)
       setProgress(newProgress)
 
-      // Update current step
+      // Update current step based on progress
       let accumulatedDuration = 0
       for (let i = 0; i < STEPS.length; i++) {
         accumulatedDuration += STEPS[i].duration
@@ -44,32 +51,42 @@ export default function Processing() {
       }
     }, 50)
 
-    // Perform actual analysis
-    analyzeCloud(file)
+    // Perform prediction
+    predict(file)
       .then((result) => {
+        clearInterval(interval)
+
+        // Save to history
+        const cloudCard = addCloud({
+          imageData: preview,
+          ...result
+        })
+
+        // Navigate to reveal screen
         setTimeout(() => {
-          navigate(`/reveal/${result.id}`, { state: { cloudData: result } })
-        }, totalDuration)
+          navigate(`/reveal/${cloudCard.id}`, { state: { cloudData: cloudCard } })
+        }, 300)
       })
       .catch((error) => {
+        clearInterval(interval)
         console.error('Analysis failed:', error)
-        alert('Failed to analyze cloud. Please try again.')
-        navigate('/')
+        setTimeout(() => {
+          alert('Failed to analyze cloud. Please try again.')
+          navigate('/capture')
+        }, 300)
       })
 
     return () => clearInterval(interval)
-  }, [location.state, navigate])
+  }, [location.state, navigate, predict, addCloud])
 
   return (
     <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 flex flex-col items-center justify-center">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-        className="mb-8"
-      >
-        <CloudIcon className="w-24 h-24 text-white" />
-      </motion.div>
+      {/* Mascot */}
+      <div className="mb-8">
+        <Mascot mood="excited" size="lg" />
+      </div>
 
+      {/* Title */}
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -78,7 +95,9 @@ export default function Processing() {
         Analyzing Cloud...
       </motion.h2>
 
+      {/* Progress Card */}
       <div className="w-full rounded-3xl bg-white/80 backdrop-blur-md shadow-sm border border-white/60 p-6">
+        {/* Progress Bar */}
         <div className="mb-6">
           <div className="bg-sky-100 rounded-full h-3 overflow-hidden">
             <motion.div
@@ -93,6 +112,7 @@ export default function Processing() {
           </p>
         </div>
 
+        {/* Step Checklist */}
         <div className="space-y-3">
           {STEPS.map((step, index) => (
             <motion.div
@@ -105,7 +125,7 @@ export default function Processing() {
               className="flex items-center gap-3"
             >
               <div
-                className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                   index < currentStep
                     ? 'bg-green-500'
                     : index === currentStep
@@ -126,14 +146,16 @@ export default function Processing() {
           ))}
         </div>
       </div>
-    </div>
-  )
-}
 
-function CloudIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.5 14.25c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5c-.15 0-.29.01-.44.04A4.99 4.99 0 0 0 14 6c-1.64 0-3.09.79-4 2.01A3.5 3.5 0 0 0 6.5 11.5c0 .17.01.33.04.5A3.5 3.5 0 0 0 4 15.5c0 1.93 1.57 3.5 3.5 3.5h12c1.38 0 2.5-1.12 2.5-2.5s-1.12-2.25-2.5-2.25z" />
-    </svg>
+      {/* Tip */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="text-white/80 text-center text-sm mt-8 px-4"
+      >
+        ✨ This usually takes 10-15 seconds...
+      </motion.p>
+    </div>
   )
 }
