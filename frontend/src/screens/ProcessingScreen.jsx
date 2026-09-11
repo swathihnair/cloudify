@@ -76,23 +76,26 @@ export default function ProcessingScreen() {
   }, [location.state, navigate, predict, addCloud])
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative">
+    <div className="min-h-screen w-full bg-gradient-to-b from-sky-400 via-sky-200 to-blue-50 p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Floating background clouds */}
+      <FloatingClouds />
+
       {/* Mascot */}
-      <div className="mb-8 lg:mb-12 relative z-10">
-        <Mascot mood="excited" size="lg" />
+      <div className="mb-8 lg:mb-12 relative z-50">
+        <Mascot mood="processing" size="lg" />
       </div>
 
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 text-center relative z-10"
+        className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 text-center relative z-50"
       >
         Analyzing Cloud...
       </motion.h2>
 
       {/* Progress Card */}
-      <div className="w-full max-w-md lg:max-w-xl cloud-container p-6 sm:p-8 relative z-10">
+      <div className="w-full max-w-md lg:max-w-xl cloud-container p-6 sm:p-8 relative z-50">
         {/* Progress Bar */}
         <div className="mb-6">
           <div className="bg-sky-100 rounded-full h-3 overflow-hidden">
@@ -148,7 +151,7 @@ export default function ProcessingScreen() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-white/80 text-center text-sm mt-8 px-4"
+        className="text-white/80 text-center text-sm mt-8 px-4 relative z-50"
       >
         ✨ This usually takes 10-15 seconds...
       </motion.p>

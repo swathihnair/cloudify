@@ -63,23 +63,23 @@ export default function CloudCardScreen() {
       </div>
 
       {/* Content Container */}
-      <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full">
+      <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full overflow-y-auto">
         {/* Cloud Image with Overlay */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-4 sm:p-6 lg:p-8 mb-6 flex-1 flex flex-col"
+          className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-3 sm:p-4 lg:p-6 mb-4 flex flex-col"
         >
           {/* Image Container */}
-          <div className="relative mb-6 rounded-2xl overflow-hidden bg-gray-200 flex-1 max-w-2xl mx-auto w-full">
+          <div className="relative mb-4 rounded-2xl overflow-hidden bg-gray-200 w-full">
             {cloudData.imageData ? (
               <>
                 <img
                   ref={imageRef}
                   src={cloudData.imageData}
                   alt="Cloud"
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-contain"
                 />
                 {/* Doodle Overlay */}
                 <AnimatePresence>
@@ -94,7 +94,7 @@ export default function CloudCardScreen() {
                 </AnimatePresence>
               </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-56 flex items-center justify-center">
                 <span className="text-gray-500">No image</span>
               </div>
             )}
@@ -107,38 +107,38 @@ export default function CloudCardScreen() {
             transition={{ delay: 0.3 }}
           >
             {/* Character Name */}
-            <h3 className="text-2xl sm:text-3xl font-bold text-sky-900 mb-2 text-center">
+            <h3 className="text-xl sm:text-2xl font-bold text-sky-900 mb-1 text-center">
               {personality.name || 'Unknown Cloud'}
             </h3>
 
             {/* Category & Confidence Badges */}
-            <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
-              <div className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                <Star className="w-4 h-4 fill-white" />
+            <div className="flex items-center justify-center gap-2 mb-3 flex-wrap">
+              <div className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1">
+                <Star className="w-3 h-3 fill-white" />
                 {cloudData.category?.toUpperCase()}
               </div>
-              <div className="bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-bold">
+              <div className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
                 {cloudData.confidence}%
               </div>
             </div>
 
             {/* Trait */}
-            <div className="bg-purple-50 rounded-lg px-3 py-2 mb-4">
-              <p className="text-sm text-purple-700 font-semibold text-center">
+            <div className="bg-purple-50 rounded-lg px-3 py-2 mb-3">
+              <p className="text-xs sm:text-sm text-purple-700 font-semibold text-center">
                 ✨ {personality.trait || 'A mysterious cloud'}
               </p>
             </div>
 
             {/* Quote */}
-            <div className="bg-sky-50 rounded-2xl p-4 mb-4">
-              <p className="text-sky-900 text-center italic text-sm sm:text-base">
+            <div className="bg-sky-50 rounded-2xl p-3 mb-3">
+              <p className="text-sky-900 text-center italic text-xs sm:text-sm">
                 "{personality.caption || 'Floating in the sky, full of mystery...'}"
               </p>
             </div>
 
             {/* Alt Category */}
             {cloudData.alt_category && (
-              <div className="flex items-center justify-between text-sm bg-gray-50 rounded-lg p-3">
+              <div className="flex items-center justify-between text-xs sm:text-sm bg-gray-50 rounded-lg p-2">
                 <span className="text-gray-600">Could also be:</span>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-900 font-medium">{cloudData.alt_category?.toUpperCase()}</span>
@@ -152,7 +152,7 @@ export default function CloudCardScreen() {
         </motion.div>
 
         {/* Action Buttons */}
-        <div className="space-y-3 max-w-md mx-auto w-full">
+        <div className="space-y-2 max-w-md mx-auto w-full">
           <motion.button
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -160,10 +160,10 @@ export default function CloudCardScreen() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate(`/stats/${id}`, { state: { cloudData } })}
-            className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-3 sm:py-4 font-bold shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-shadow"
+            className="w-full rounded-2xl bg-gradient-to-r from-sky-500 to-blue-500 text-white px-6 py-2 sm:py-3 font-bold shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-shadow text-sm sm:text-base"
           >
             View Personality Stats
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </motion.button>
 
           <motion.button
@@ -173,9 +173,9 @@ export default function CloudCardScreen() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate(`/poll/${id}`, { state: { cloudData } })}
-            className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-600 px-6 py-3 sm:py-4 font-semibold shadow-md flex items-center justify-center gap-2 hover:bg-white transition-colors"
+            className="w-full rounded-2xl bg-white/80 backdrop-blur-md text-sky-600 px-6 py-2 sm:py-3 font-semibold shadow-md flex items-center justify-center gap-2 hover:bg-white transition-colors text-sm sm:text-base"
           >
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             Make Your Guess
           </motion.button>
         </div>

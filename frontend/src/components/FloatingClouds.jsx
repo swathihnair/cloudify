@@ -7,8 +7,9 @@ import { motion } from 'framer-motion'
  * Creates a calm, delightful atmosphere on landing page
  */
 export default function FloatingClouds() {
-  // Individual cloud animation configuration
+  // Individual cloud animation configuration - Left, Right, Bottom, and Top placement
   const cloudVariants = [
+    // LEFT SIDE (Top section)
     {
       id: 1,
       x: 80,
@@ -21,8 +22,8 @@ export default function FloatingClouds() {
     },
     {
       id: 2,
-      x: 250,
-      y: 120,
+      x: 120,
+      y: 180,
       opacity: 0.55,
       delay: 1,
       duration: 10,
@@ -31,8 +32,8 @@ export default function FloatingClouds() {
     },
     {
       id: 3,
-      x: 450,
-      y: 80,
+      x: 90,
+      y: 320,
       opacity: 0.7,
       delay: 2,
       duration: 14,
@@ -41,18 +42,19 @@ export default function FloatingClouds() {
     },
     {
       id: 4,
-      x: 150,
-      y: 280,
+      x: 110,
+      y: 480,
       opacity: 0.6,
       delay: 0.5,
       duration: 11,
       pathX: [-18, 22, -18],
       pathY: [-8, 12, -8],
     },
+    // LEFT SIDE (Bottom section)
     {
       id: 5,
-      x: 350,
-      y: 240,
+      x: 100,
+      y: 680,
       opacity: 0.68,
       delay: 1.5,
       duration: 13,
@@ -61,13 +63,141 @@ export default function FloatingClouds() {
     },
     {
       id: 6,
-      x: 550,
-      y: 180,
+      x: 130,
+      y: 740,
       opacity: 0.58,
       delay: 2.5,
       duration: 9,
       pathX: [-16, 24, -16],
       pathY: [-11, 16, -11],
+    },
+    
+    // CENTER-LEFT TRANSITION
+    {
+      id: 7,
+      x: 250,
+      y: 120,
+      opacity: 0.62,
+      delay: 1.2,
+      duration: 11.5,
+      pathX: [-20, 25, -20],
+      pathY: [-10, 16, -10],
+    },
+    {
+      id: 8,
+      x: 280,
+      y: 400,
+      opacity: 0.64,
+      delay: 0.8,
+      duration: 13,
+      pathX: [-15, 20, -15],
+      pathY: [-14, 18, -14],
+    },
+    {
+      id: 9,
+      x: 260,
+      y: 700,
+      opacity: 0.56,
+      delay: 2.1,
+      duration: 10.5,
+      pathX: [-22, 28, -22],
+      pathY: [-12, 14, -12],
+    },
+    
+    // RIGHT SIDE (Top section)
+    {
+      id: 10,
+      x: 1080,
+      y: 80,
+      opacity: 0.6,
+      delay: 1.8,
+      duration: 12,
+      pathX: [20, -25, 20],
+      pathY: [-9, 13, -9],
+    },
+    {
+      id: 11,
+      x: 1120,
+      y: 200,
+      opacity: 0.67,
+      delay: 2.3,
+      duration: 11,
+      pathX: [20, -25, 20],
+      pathY: [-10, 15, -10],
+    },
+    {
+      id: 12,
+      x: 1100,
+      y: 360,
+      opacity: 0.54,
+      delay: 0.9,
+      duration: 13.5,
+      pathX: [16, -22, 16],
+      pathY: [-8, 12, -8],
+    },
+    {
+      id: 13,
+      x: 1090,
+      y: 520,
+      opacity: 0.61,
+      delay: 1.4,
+      duration: 11,
+      pathX: [18, -24, 18],
+      pathY: [-11, 14, -11],
+    },
+    
+    // RIGHT SIDE (Bottom section)
+    {
+      id: 14,
+      x: 1110,
+      y: 700,
+      opacity: 0.59,
+      delay: 2.6,
+      duration: 12,
+      pathX: [22, -28, 22],
+      pathY: [-9, 15, -9],
+    },
+    {
+      id: 15,
+      x: 1080,
+      y: 750,
+      opacity: 0.65,
+      delay: 0.7,
+      duration: 10.5,
+      pathX: [19, -26, 19],
+      pathY: [-10, 13, -10],
+    },
+    
+    // CENTER-RIGHT TRANSITION
+    {
+      id: 16,
+      x: 900,
+      y: 140,
+      opacity: 0.62,
+      delay: 1.1,
+      duration: 12,
+      pathX: [20, -25, 20],
+      pathY: [-10, 16, -10],
+    },
+    {
+      id: 17,
+      x: 920,
+      y: 420,
+      opacity: 0.64,
+      delay: 1.9,
+      duration: 11,
+      pathX: [15, -20, 15],
+      pathY: [-14, 17, -14],
+    },
+    {
+      id: 18,
+      x: 910,
+      y: 720,
+      opacity: 0.56,
+      delay: 2.2,
+      duration: 13,
+      pathX: [18, -23, 18],
+      pathY: [-12, 15, -12],
     },
   ]
 

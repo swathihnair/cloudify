@@ -425,32 +425,6 @@ export default function Mascot({ mood = 'idle', size = 'lg', interactive = true 
                 />
               </>
             )}
-
-            {/* Energy ripples for excited/processing states */}
-            {(currentMood === 'excited' || currentMood === 'processing') && (
-              <>
-                <motion.circle
-                  cx="60"
-                  cy="60"
-                  r="55"
-                  fill="none"
-                  stroke="#FFC107"
-                  strokeWidth="1.5"
-                  animate={{ r: [55, 72, 55], opacity: [0.8, 0, 0.8] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <motion.circle
-                  cx="60"
-                  cy="60"
-                  r="40"
-                  fill="none"
-                  stroke="#FFC107"
-                  strokeWidth="1.5"
-                  animate={{ r: [40, 57, 40], opacity: [0, 0.8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}
-                />
-              </>
-            )}
           </svg>
         </motion.div>
       </motion.div>
