@@ -48,13 +48,17 @@ export default function CharacterReveal() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
+          <div className="text-6xl text-center mb-3">
+            {cloudData.emoji || '☁️'}
+          </div>
+          
           <h3 className="text-3xl font-bold text-sky-900 mb-2 text-center">
             {cloudData.character_name}
           </h3>
           
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-              <Star className="w-4 h-4 fill-white" />
+              {cloudData.emoji || '☁️'}
               {cloudData.top_guess}
             </div>
             <div className="bg-sky-100 text-sky-700 px-4 py-2 rounded-full text-sm font-bold">

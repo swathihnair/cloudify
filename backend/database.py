@@ -28,6 +28,7 @@ class CloudScan(Base):
     energy_score = Column(Integer, nullable=False)
     cuteness_score = Column(Integer, nullable=False)
     stats = Column(JSON, nullable=False)
+    emoji = Column(String, nullable=True)
     user_poll_guess = Column(String, nullable=True)
     is_cloud_of_the_day = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)

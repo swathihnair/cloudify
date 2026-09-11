@@ -44,16 +44,21 @@ async def analyze_cloud(
     try:
         # Read and save image
         image_bytes = await file.read()
+        print(f"Received image: {len(image_bytes)} bytes")
+        
         file_id = str(uuid.uuid4())
-        file_extension = file.filename.split(".")[-1]
+        file_extension = file.filename.split(".")[-1] if file.filename and "." in file.filename else "jpg"
         filename = f"{file_id}.{file_extension}"
         filepath = os.path.join(UPLOAD_DIR, filename)
         
         with open(filepath, "wb") as f:
             f.write(image_bytes)
+        print(f"Saved image to: {filepath}")
         
         # Analyze image
+        print("Starting image analysis...")
         analysis = analyze_cloud_image(image_bytes)
+        print(f"Analysis complete: {analysis.get('character_name')}")
         
         # Create database entry
         cloud_scan = CloudScan(
@@ -68,11 +73,13 @@ async def analyze_cloud(
             energy_score=analysis["energy_score"],
             cuteness_score=analysis["cuteness_score"],
             stats=analysis["stats"],
+            emoji=analysis.get("emoji", "☁️"),
         )
         
         db.add(cloud_scan)
         db.commit()
         db.refresh(cloud_scan)
+        print(f"Saved to database with ID: {cloud_scan.id}")
         
         return {
             "id": cloud_scan.id,
@@ -87,9 +94,13 @@ async def analyze_cloud(
             "energy_score": cloud_scan.energy_score,
             "cuteness_score": cloud_scan.cuteness_score,
             "stats": cloud_scan.stats,
+            "emoji": cloud_scan.emoji,
         }
     
     except Exception as e:
+        print(f"Error in analyze_cloud: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/clouds/{cloud_id}/poll")
@@ -144,6 +155,7 @@ async def get_featured_cloud(db: Session = Depends(get_db)):
         "top_guess": cloud.top_guess,
         "confidence_score": cloud.confidence_score,
         "quote": cloud.quote,
+        "emoji": cloud.emoji,
         "created_at": cloud.created_at.isoformat(),
     }
 
@@ -173,6 +185,7 @@ async def get_cloud_history(
             "character_name": cloud.character_name,
             "top_guess": cloud.top_guess,
             "confidence_score": cloud.confidence_score,
+            "emoji": cloud.emoji,
             "created_at": cloud.created_at.isoformat(),
         }
         for cloud in clouds

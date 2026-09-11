@@ -94,12 +94,16 @@ export default function History() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-bold text-sky-900 mb-1 truncate">
-                    {cloud.character_name}
-                  </h3>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-2xl">{cloud.emoji || '☁️'}</span>
+                    <h3 className="text-lg font-bold text-sky-900 truncate">
+                      {cloud.character_name}
+                    </h3>
+                  </div>
 
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    <span className="bg-gradient-to-r from-sky-500 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                      {cloud.emoji || '☁️'}
                       {cloud.top_guess}
                     </span>
                     <span className="bg-sky-100 text-sky-700 px-2 py-1 rounded-full text-xs font-bold">

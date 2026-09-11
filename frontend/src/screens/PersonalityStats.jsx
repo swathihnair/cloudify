@@ -34,6 +34,10 @@ export default function PersonalityStats() {
         animate={{ opacity: 1, y: 0 }}
         className="rounded-3xl bg-white/80 backdrop-blur-md shadow-lg border border-white/60 p-6 mb-6"
       >
+        <div className="text-5xl text-center mb-3">
+          {cloudData.emoji || '☁️'}
+        </div>
+        
         <h3 className="text-2xl font-bold text-sky-900 mb-4 text-center">
           {cloudData.character_name}
         </h3>
