@@ -9,12 +9,25 @@ from dotenv import load_dotenv
 import os
 import uuid
 from typing import Optional
+import sys
 
-# Load environment variables
-load_dotenv()
+# Load environment variables (optional - may not exist on Render)
+try:
+    load_dotenv(verbose=False)
+    print("✅ Environment variables loaded")
+except Exception as e:
+    print(f"⚠️  Could not load .env file: {e}")
+    print("   (This is normal on Render)")
 
-from database import get_db, CloudScan
-from analyzer import analyze_cloud_image, generate_poll_response
+try:
+    from database import get_db, CloudScan
+    from analyzer import analyze_cloud_image, generate_poll_response
+    print("✅ Imports successful")
+except Exception as e:
+    print(f"❌ Import error: {e}")
+    import traceback
+    traceback.print_exc()
+    sys.exit(1)
 
 app = FastAPI(title="Cloudify API")
 
